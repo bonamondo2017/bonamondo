@@ -1,0 +1,60 @@
+<mat-card id="ntm-login">
+  <div class="div-title" *ngIf="params.imageTitle || params.textTitle || params.helpUrlAndIcon">
+    <div id="image-title-division" class="div-form-pattern" *ngIf="params.imageTitle">
+        <img src="{{params.imageTitle}}" alt="" id="image-title">
+    </div>
+
+    <div class="h2-title div-form-pattern" id="text-title" *ngIf="params.textTitle">
+      <h2>{{params.textTitle}}</h2>
+    </div>
+
+    <div id="help" *ngIf="params.helpUrlAndIcon">
+      <a href="{{params.helpUrlAndIcon.url}}"><mat-icon>{{params.helpUrlAndIcon.googleIcon}}</mat-icon></a>
+    </div>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+  *ngIf="errors.length < 1">
+    <mat-card-content>
+      <div class="float-left h70">
+        <div class="float-left div-form-pattern">
+          <mat-icon class="mat-18">person</mat-icon>
+        </div>
+        <div class="float-left mr10 div-form-pattern w290">
+          <mat-input-container>
+              <input matInput formControlName="email" type="text"
+              placeholder="E-mail" maxlength="191">
+          </mat-input-container>
+        </div>
+      </div>
+
+      <div class="float-left h70">
+        <div class="float-left div-form-pattern">
+          <mat-icon class="mat-18">lock_open</mat-icon>
+        </div>
+        <div class="float-left  div-form-pattern w290">
+          <mat-input-container>
+            <input matInput formControlName="password" type="password"
+            placeholder="Senha" maxlength="191">
+          </mat-input-container>
+        </div>
+      </div>
+      <div class="clear-both"></div>
+    </mat-card-content>
+
+    <mat-card-actions>
+
+      <button style="margin-right:16px;" mat-raised-button type="submit"
+      color="primary" [disabled]="!loginForm.valid">
+        Entrar
+      </button>
+
+      <a mat-button (click)="onForgotPassword()"
+      *ngIf="params.forgotPassword">Esqueci a senha</a>
+    </mat-card-actions>  
+
+  </form>
+
+  <div *ngFor="let error of errors">
+    <mat-error>{{ error.cod }} - {{ error.message }}</mat-error>
+  </div>
+</mat-card>
