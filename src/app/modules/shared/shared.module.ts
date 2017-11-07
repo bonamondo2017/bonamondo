@@ -35,8 +35,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 /**
  * Services
  */
-import { AuthenticationService } from './services/laravel/authentication.service';
-import { CrudService } from './services/laravel/crud.service';
+import { AuthenticationService } from './services/firebase/authentication.service';
+import { CrudService } from './services/firebase/crud.service';
 
 @NgModule({
   imports: [
@@ -78,6 +78,7 @@ import { CrudService } from './services/laravel/crud.service';
     MenuSidenavComponent,
     MatSlideToggleModule,
     MatToolbarModule,
+    ReactiveFormsModule,
     ScheduleComponent,
     TableDataComponent,
     TextMaskModule

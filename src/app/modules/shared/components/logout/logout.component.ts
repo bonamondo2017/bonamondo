@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'ntm-logout',
+  selector: 'bonamondo-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css']
 })
@@ -23,7 +23,7 @@ export class LogoutComponent implements OnInit {
         this.mdIcon = "exit_to_app";
       }
 
-      if(!this.params.route) {
+      if(!this.params.routeAfterLogout) {
         this.errors.push({
           cod: 'bm-lo-01',
           message: "Definir rota do logout"
@@ -39,6 +39,6 @@ export class LogoutComponent implements OnInit {
 
   logout = () => {
     sessionStorage.clear();
-    this.router.navigate(this.params.route);
+    this.router.navigate(this.params.routeAfterLogout);
   }
 }

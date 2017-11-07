@@ -20,12 +20,11 @@
   <a (click)="onToggle($event)">
     <mat-icon class="mat-18" *ngIf="toggle" class="mr5">{{mdIconClose}}</mat-icon>
   </a>
-  <span id="username">{{userName}}</span>
   <div>
     <mat-icon class="mat-18" class="mr20">settings</mat-icon>
     <mat-icon class="mat-18" class="mr20">person</mat-icon>
     <mat-icon class="mat-18" class="mr20">help</mat-icon>
-    <ntm-logout [params]="{route: ['/login']}"></ntm-logout>
+    <bonamondo-logout *ngIf="params.paramsToLogout" [params]="params.paramsToLogout"></bonamondo-logout>
   </div>
 </span>
 

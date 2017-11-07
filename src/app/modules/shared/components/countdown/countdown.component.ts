@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
-  selector: 'ntm-countdown',
+  selector: 'bonamondo-countdown',
   templateUrl: './countdown.component.html',
   styleUrls: ['./countdown.component.css']
 })

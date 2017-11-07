@@ -1,9 +1,9 @@
-import { CrudService } from './../../services/laravel/crud.service';
+import { CrudService } from './../../services/firebase/crud.service';
 import { Component, Input, OnInit, trigger, transition, style, animate, state } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'ntm-menu-sidenav',
+  selector: 'bonamondo-menu-sidenav',
   animations: [
     trigger(
       'firstAnimation',
@@ -98,22 +98,6 @@ export class MenuSidenavComponent implements OnInit {
         message: "Definir parâmetros mínimos do componente"
       });
     }
-
-    this.crud.read({
-      route: 'user'
-    })
-    .then(res => {
-      let nameArray;
-
-      this.userData = res['obj'];
-      
-      if(this.userData.name) {
-        nameArray = this.userData.name.split(" ");
-        this.userName = nameArray[0] //+ " " + nameArray[nameArray.length - 1];
-      } else {
-        this.userName = "Sem nome cadastrado"
-      }
-    })
   }
 
   onMenuRoute = (route) => {

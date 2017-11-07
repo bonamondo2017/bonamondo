@@ -3,10 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
 /*Services*/
-import { CrudService } from './../../services/laravel/crud.service';
+import { CrudService } from './../../services/firebase/crud.service';
 
 @Component({
-  selector: 'ntm-delete-confirm',
+  selector: 'bonamondo-delete-confirm',
   templateUrl: './delete-confirm.component.html',
   styleUrls: ['./delete-confirm.component.css']
 })

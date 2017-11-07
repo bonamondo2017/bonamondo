@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 /**
  * Services
  */
-import { CrudService } from './../../services/laravel/crud.service';
+import { CrudService } from './../../services/firebase/crud.service';
 
 @Component({
-  selector: 'ntm-table-data',
+  selector: 'bonamondo-table-data',
   templateUrl: './table-data.component.html',
   styleUrls: ['./table-data.component.css']
 })

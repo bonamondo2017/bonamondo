@@ -4,7 +4,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
 /**Services */
-import { AuthenticationService } from './../../services/laravel/authentication.service';
+import { AuthenticationService } from './../../services/firebase/authentication.service';
 
 /**
  * Components
@@ -12,7 +12,7 @@ import { AuthenticationService } from './../../services/laravel/authentication.s
 import { ForgotPasswordComponent } from './../forgot-password/forgot-password.component';
 
 @Component({
-  selector: 'ntm-login',
+  selector: 'bonamondo-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     if(this.params) {
       if(!this.params.routeAfterLoggedIn) {
         this.errors.push({
-          cod: 'ntm-l-01',
+          cod: 'bonamondo-l-01',
           message: "Definir rota do login"
         });
       }
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.loginForm = new FormGroup({
-      'email': new FormControl(null, [Validators.required, Validators.email,Validators.maxLength(191)]),
+      'login': new FormControl(null, [Validators.required, Validators.email,Validators.maxLength(191)]),
       'password': new FormControl(null, [Validators.required,Validators.maxLength(191)])
     })
   }
@@ -65,21 +65,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit = () => {
-    this.params.email = this.loginForm.get('email');
+    this.params.login = this.loginForm.get('login');
     this.params.password = this.loginForm.get('password');
-
-    this.authentication.login(this.loginForm.value)
+    
+    this.authentication.login(this.params)
     .catch(error => {
       console.log(error)
     })
     .then(res => {
       let string = JSON.stringify(res);
       let json = JSON.parse(string);
+      
       if(json.cod == "l-01") {
         this.matsnackbar.open(json.message, '', {
           duration: 2000
         });
-
+        console.log(this.params.routeAfterLoggedIn)
         this.router.navigate(this.params.routeAfterLoggedIn);
       }
 

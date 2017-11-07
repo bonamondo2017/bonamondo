@@ -12,9 +12,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.paramsToLogin = {
+      loginMode: 'emailAndPassword',
       routeAfterLoggedIn: ['/main'],
       imageTitle: './../assets/img/logo-ntm-black.png',
-      textTitle: 'Acesso ao NTM',
+      textTitle: 'Acesso ao BonaMondo',
       helpUrlAndIcon: {
         googleIcon: 'help',
         url:'http://www.google.com'

@@ -14,6 +14,9 @@ const routes: Routes = [{
   }, { 
     path: 'dashboard', 
     component: DashboardComponent 
+  }, { 
+    path: 'dashboard/:id', 
+    component: DashboardComponent 
   }]
 }];
 

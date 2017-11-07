@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
  * Components
  */
 import { LoginComponent } from './components/login/login.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 /**
  * Guards

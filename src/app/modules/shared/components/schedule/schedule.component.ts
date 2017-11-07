@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, NativeDateAdapter, MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: 'ntm-schedule',
+  selector: 'bonamondo-schedule',
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.css']
 })

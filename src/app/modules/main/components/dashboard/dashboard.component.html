@@ -1,3 +1,23 @@
-<p>
-  dashboard works!
-</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+    <mat-card-subtitle>How to make a perfect blueprint</mat-card-subtitle>
+  </mat-card-header>
+  <form (ngSubmit)="onDashboardFormSubmit()" [formGroup]="dashboardForm">
+    <mat-form-field id="description">
+      <input matInput formControlName="description" type="text" placeholder="Description">
+    </mat-form-field>
+
+    <mat-form-field id="status">
+      <mat-select formControlName="status" placeholder="Status">
+        <mat-option *ngFor="let item of statusSelect" [value]="item">{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-card-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!dashboardForm.valid">{{submitButton}}</button>    
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+<bonamondo-table-data [params]="paramsToTableData"></bonamondo-table-data>

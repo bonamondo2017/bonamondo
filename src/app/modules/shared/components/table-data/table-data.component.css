@@ -8,6 +8,10 @@ mat-card {
   border-radius: 3px; 
 }
 
+a {
+    cursor: pointer;
+}
+
 table {
     width: 100%;
 }

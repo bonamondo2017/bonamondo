@@ -4,10 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
 /*Services*/
-import { AuthenticationService } from './../../services/laravel/authentication.service';
+import { AuthenticationService } from './../../services/firebase/authentication.service';
 
 @Component({
-  selector: 'ntm-forgot-password',
+  selector: 'bonamondo-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
 })
