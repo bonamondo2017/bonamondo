@@ -99,7 +99,6 @@ export class DashboardComponent implements OnInit {
         order: ['description', 'desc'],
         edit: {route: '/main/dashboard/', param: '__key'},
         page: 1,
-        source: true,
         changeValue: [{
           field: 'status',
           fieldValue: 'To-Do',
