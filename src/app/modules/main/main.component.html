@@ -1,6 +1,11 @@
 <mat-toolbar>
-    <bonamondo-menu-sidenav [params]="paramsToMenuSidenav"></bonamondo-menu-sidenav>
-    <span>Title</span>
+    <div id="menu-sidenav">
+        <bonamondo-menu-sidenav [params]="paramsToMenuSidenav"></bonamondo-menu-sidenav>
+    </div>
+
+    <div id="title">
+        <a [routerLink]="['/main']">Title</a>
+    </div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

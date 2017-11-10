@@ -339,8 +339,8 @@ export class TableDataComponent implements OnInit, OnChanges {
     let itensToDeleteIds = [];
     
     for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
-      if(this.arraySource[i]._checked){
-        itensToDeleteIds.push(this.arraySource[i][fieldToUseInDelete[0].param]);
+      if(this.arraySource[i]._checked) {
+        itensToDeleteIds.push(this.arraySource[i][fieldToUseInDelete[0].fieldToDelete]);
       }
     };
     
@@ -353,7 +353,7 @@ export class TableDataComponent implements OnInit, OnChanges {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {      
+    dialogRef.afterClosed().subscribe(result => {
       let array: any;
       let string: string;
 

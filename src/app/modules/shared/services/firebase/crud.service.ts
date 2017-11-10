@@ -174,6 +174,59 @@ export class CrudService {
   })
 
   delete = (params) => new Promise((resolve, reject) => {
+    if(!params.route) {
+      return this.message = {
+        cod: "d-01",
+        description: "Informar erro d-01 ao administrador"
+      };
+    }
 
+    if(!params.paramToDelete) {
+      return this.message = {
+        cod: "d-02",
+        description: "Informar erro d-02 ao administrador"
+      };
+    }
+
+    let checkDelete = false;
+
+    for(let lim = params.paramToDelete.length, i =0; i < lim; i++) {
+      let ref = fbDatabase.ref(params.route+"/"+params.paramToDelete[i]);
+      ref.remove()
+      .catch(rej => {
+        console.log(197)
+        checkDelete = false;
+
+        reject({
+          cod: "error-d-01",
+          message: rej
+        })
+      })
+      .then(res => {
+        console.log(205)
+        checkDelete = true;
+        console.log(checkDelete)
+      });
+    }
+
+    console.log(checkDelete)
+
+    if(checkDelete) {
+      let number = params.paramToDelete.length;
+
+      if(number > 1) {
+        resolve({
+          cod: "d-03",
+          message: number+" ítens removidos com sucesso"
+        })
+      } else {
+        resolve({
+          cod: "d-03",
+          message: number+" item removido com sucesso"
+        })
+      }
+    } else {
+
+    }
   })
 }

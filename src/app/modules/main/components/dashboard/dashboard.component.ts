@@ -39,36 +39,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.statusSelect = ["To-Do", "Problems", "Done"];
     
-    /*update start*/
-    this.route.params.subscribe(params => {
-      if(params.id) {
-        this.paramToSearch = params.id;
-        this.submitToCreate = false;
-        this.submitToUpdate = true;
-        this.title = "Update Task";
-        this.submitButton = "Update";
-
-        this.crud.read({
-          route: 'blueprintTasks',
-          order: ['id', 'desc'],
-          search: [{
-            where: 'id',
-            value: this.paramToSearch.replace(':', '')
-          }],
-          page: 1
-        }).then(res => {
-          let obj = res[0];
-
-          this.dashboardForm.patchValue(obj);
-        })
-      } else {
-        this.submitToCreate = true;
-        this.submitToUpdate = false;
-        this.title = "New Task";
-        this.submitButton = "Save";
-      }
-    })
-    /*update end*/
+    this.dashboardInit();
 
     this.dashboardForm = new FormGroup({
       'description': new FormControl(null, Validators.required),
@@ -82,13 +53,40 @@ export class DashboardComponent implements OnInit {
    * Cycle hook actions end
    */
 
+  dashboardInit = () => {
+    this.route.params.subscribe(params => {
+      if(params.id) {
+        this.paramToSearch = params.id;
+        this.submitToCreate = false;
+        this.submitToUpdate = true;
+        this.title = "Update Task";
+        this.submitButton = "Update";
+
+        let param = this.paramToSearch.replace(':', '');
+
+        this.crud.read({
+          route: 'blueprintTasks/'+param,
+          page: 1
+        }).then(res => {
+          this.dashboardForm.patchValue(res);
+        })
+      } else {
+        this.submitToCreate = true;
+        this.submitToUpdate = false;
+        this.title = "New Task";
+        this.submitButton = "Save";
+      }
+    })
+  }
+
   makeList = () => {
     this.paramsToTableData = {
       toolbar: {
         title: "Tasks list",
         delete: [{
-          route: '/main/dashboard',
-          param: '__key'
+          routeAfterDelete: '/main/dashboard',
+          routeToApi: 'blueprintTask',
+          fieldToDelete: '__key'
         }],
         search: true
       },

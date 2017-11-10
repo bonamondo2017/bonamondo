@@ -1,0 +1,10 @@
+#menu-sidenav {
+    float: left;
+    margin-top: 0;
+    width: 50px;
+}
+
+#title {
+    float: left;
+    margin-top: 20px;
+}

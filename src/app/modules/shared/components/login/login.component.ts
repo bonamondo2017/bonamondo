@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
         this.matsnackbar.open(json.message, '', {
           duration: 2000
         });
-        console.log(this.params.routeAfterLoggedIn)
+        
         this.router.navigate(this.params.routeAfterLoggedIn);
       }
 
