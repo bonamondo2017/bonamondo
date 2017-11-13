@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 /**
  * Services
  */
-import { CrudService } from './../../services/firebase/crud.service';
+import { AuthenticationService } from './../../services/firebase/authentication.service';
+
 
 @Component({
   selector: 'bonamondo-user-register',
@@ -23,7 +24,7 @@ export class UserRegisterComponent implements OnInit {
   title: string;
 
   constructor(
-    private crud: CrudService,
+    private authentication: AuthenticationService,
     public matsnackbar: MatSnackBar,
     private router: Router
   ) { }
@@ -91,26 +92,27 @@ export class UserRegisterComponent implements OnInit {
     };
   }
 
-  onUserRegisterFormSubmit = () => {  
-    let params = {
-      route: 'users',
-      objectToCreate: this.userRegisterForm.value
-    };
+  onUserRegisterFormSubmit = () => {
+    if(this.params.type === "invitation") {
+      let params = {
+        email: this.userRegisterForm.get('email').value,
+        repeatEmail: this.userRegisterForm.get('repeatEmail').value
+      }
 
-    this.crud.create(params)
-    .then(res => {
-      this.matsnackbar.open(res['message'], '', {
-        duration: 2000
-      })
-    }, rej => {
-      this.matsnackbar.open(rej['message'], '', {
-        duration: 3000
-      })
-    })
-
-    this.userRegisterForm.patchValue(this.userRegisterForm.value);
-
-    this.makeList();
-  
-  }
+      this.authentication.signup(params)
+      .then(res => {
+          this.matsnackbar.open(res['message'], '', {
+            duration: 2000
+          })
+        }, rej => {
+          this.matsnackbar.open(rej['message'], '', {
+            duration: 3000
+          })
+        })
+    
+        this.userRegisterForm.patchValue(this.userRegisterForm.value);
+    
+        this.makeList();
+      }
+    }
 }

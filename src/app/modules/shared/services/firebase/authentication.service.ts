@@ -83,6 +83,25 @@ export class AuthenticationService {
       })
     }
   })
+  
+  recoverPasswordEmail = (email) => new Promise((resolve, reject) => {
+    fbAuth.fetchProvidersForEmail(email)
+    .then(res => {
+      if(res.length > 0) {
+        fbAuth.sendPasswordResetEmail(email);
+
+        resolve({
+          cod: "rpe-01",
+          message: "E-mail enviado. Cheque e finalize o processo."
+        })
+      } else {
+        resolve({
+          cod: "rpe-02",
+          message: "E-mail não cadastrado."
+        })
+      }
+    });
+  })
 
   signup = (params) => new Promise((resolve, reject) => {
     if(!params) {
@@ -136,6 +155,7 @@ export class AuthenticationService {
     let res;
     
     if(params.email === params.repeatEmail) {
+      console.log(158)
       //Checking if signing up email is already registered
       fbDatabase.ref('/users')
       .orderByChild('email')
@@ -163,7 +183,7 @@ export class AuthenticationService {
               this.signupCheckingUsername(params.email, params.password, params.type, username, 0);
             } else {
               fbAuth.createUserWithEmailAndPassword(params.email, params.password)
-              .then(res => {
+              .then(check => {
                 let uid = fbAuth.currentUser.uid;
 
                 fbDatabase.ref('users').child(uid).set({
@@ -171,10 +191,13 @@ export class AuthenticationService {
                   username: username
                 })
 
-                resolve({
-                  cod: "s-01",
-                  message: res
-                });
+                fbAuth.sendPasswordResetEmail(params.email)
+                .then(res => {
+                  resolve({
+                    cod: "s-01",
+                    message: res
+                  });
+                })
               })
               .catch(rej => {
                 reject({
@@ -189,25 +212,6 @@ export class AuthenticationService {
     } else {
       resolve("Email was not repeated correctly");
     }
-  })
-
-  recoverPasswordEmail = (email) => new Promise((resolve, reject) => {
-    fbAuth.fetchProvidersForEmail(email)
-    .then(res => {
-      if(res.length > 0) {
-        fbAuth.sendPasswordResetEmail(email);
-
-        resolve({
-          cod: "rpe-01",
-          message: "E-mail enviado. Cheque e finalize o processo."
-        })
-      } else {
-        resolve({
-          cod: "rpe-02",
-          message: "E-mail não cadastrado."
-        })
-      }
-    });
   })
   
   signupCheckingUsername = (email, password, type, username, number) => new Promise((resolve, reject) => {
