@@ -84,30 +84,75 @@ export class AuthenticationService {
     }
   })
 
-  signup = (email, repeatEmail, password, firstUsername) => new Promise((resolve, reject) => {
+  signup = (params) => new Promise((resolve, reject) => {
+    if(!params) {
+      return {
+        cod: "s-01",
+        message: "No params"
+      }
+    } else {
+      if(!params.email) {
+        return {
+          cod: "s-02",
+          message: "Email needed - e.g.: email<string>"
+        }
+      }
+      
+      if(!params.repeatEmail) {
+        return {
+          cod: "s-03",
+          message: "Repeat email needed - e.g.: repeatEmail<string>"
+        }
+      }
+
+      if(!params.type) {
+        return {
+          cod: "s-04",
+          message: "Type needed - e.g.: type<string>"
+        }
+      }
+
+      if(!params.password) {
+        if(!params.type) {
+          return {
+            cod: "s-04",
+            message: "Password needed - e.g.: password<string>"
+          }
+        } else {
+          if(params.type === "invitation") {
+            params.password = "*}$#@$tk$tk$c@#<@#}{r@#32131@#(@c#r@";
+          } else {
+            return {
+              cod: "s-05",
+              message: "Password needed - e.g.: password<string>"
+            }
+          }
+        }
+      }
+    }
     let username;
     let emailToUsername;
     let newUsername;
     let res;
     
-    if(email === repeatEmail) {
+    if(params.email === params.repeatEmail) {
       //Checking if signing up email is already registered
       fbDatabase.ref('/users')
       .orderByChild('email')
-      .equalTo(email)
+      .equalTo(params.email)
       .once('value')
       .then(snap => {
         if(snap.val() != null) {
           resolve("E-mail registered yet");
         } else {
-          if(firstUsername === "") {
-            emailToUsername = email.split('@');
+          if(params.firstUsername === "") {
+            emailToUsername = params.email.split('@');
             username = emailToUsername[0];
           } else {
-            username = firstUsername;
+            username = params.firstUsername;
           }
           
-          //Checking if signing up usernam exists
+          //Checking if signing up username exists
           fbDatabase.ref('/users')
           .orderByChild('username')
           .equalTo(username)
@@ -115,14 +160,14 @@ export class AuthenticationService {
           .then(snap => {
             if(snap.val() != null) {
               this.originalUsername = username;
-              this.signupCheckingUsername(email, password, username, 0);
+              this.signupCheckingUsername(params.email, params.password, params.type, username, 0);
             } else {
-              fbAuth.createUserWithEmailAndPassword(email, password)
+              fbAuth.createUserWithEmailAndPassword(params.email, params.password)
               .then(res => {
                 let uid = fbAuth.currentUser.uid;
 
                 fbDatabase.ref('users').child(uid).set({
-                  email: email,
+                  email: params.email,
                   username: username
                 })
 
@@ -165,7 +210,7 @@ export class AuthenticationService {
     });
   })
   
-  signupCheckingUsername = (email, password, username, number) => new Promise((resolve, reject) => {
+  signupCheckingUsername = (email, password, type, username, number) => new Promise((resolve, reject) => {
     let newUsername;
     let newNumber;
     
@@ -178,9 +223,16 @@ export class AuthenticationService {
         newNumber = number + 1;
         newUsername = this.originalUsername + newNumber;
         
-        this.signupCheckingUsername(email, password, newUsername, newNumber);
+        this.signupCheckingUsername(email, password, type, newUsername, newNumber);
       } else {
-        this.signup(email, email, password, username)
+        let params = {
+          email: email,
+          repeatEmail: email,
+          password: password,
+          firstUsername: username,
+          type: type
+        }
+        this.signup(params)
       }
     })
   })

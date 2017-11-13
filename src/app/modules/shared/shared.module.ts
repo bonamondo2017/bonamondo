@@ -19,8 +19,9 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MenuSidenavComponent } from './components/menu-sidenav/menu-sidenav.component';
-import { TableDataComponent } from './components/table-data/table-data.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { TableDataComponent } from './components/table-data/table-data.component';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
 
 /**
  * Guards
@@ -81,7 +82,8 @@ import { CrudService } from './services/firebase/crud.service';
     ReactiveFormsModule,
     ScheduleComponent,
     TableDataComponent,
-    TextMaskModule
+    TextMaskModule,
+    UserRegisterComponent
   ],
   declarations: [
     CountdownComponent,
@@ -90,8 +92,9 @@ import { CrudService } from './services/firebase/crud.service';
     LoginComponent,
     LogoutComponent,
     MenuSidenavComponent,
+    ScheduleComponent,
     TableDataComponent,
-    ScheduleComponent
+    UserRegisterComponent
   ],
   providers: [
     AuthenticationService,

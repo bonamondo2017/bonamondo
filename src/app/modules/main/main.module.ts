@@ -12,6 +12,7 @@ import { MainComponent } from './main.component';
  */
 import { MainRoutingModule } from './main-routing.module';
 import { SharedModule } from './../shared/shared.module';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { SharedModule } from './../shared/shared.module';
   ],
   declarations: [
     DashboardComponent, 
-    MainComponent
+    MainComponent, UserRegisterComponent
   ]
 })
 export class MainModule { }

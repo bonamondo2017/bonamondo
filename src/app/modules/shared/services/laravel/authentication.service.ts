@@ -69,4 +69,8 @@ export class AuthenticationService {
       console.log("Nada")
     })
   })
+  
+  signup = (params) => new Promise((resolve, reject) => {
+    
+  })
 }
