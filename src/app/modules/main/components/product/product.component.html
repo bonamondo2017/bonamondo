@@ -1,12 +1,38 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title></mat-card-title>
+    <mat-card-title>{{title}}</mat-card-title>
   </mat-card-header>
   <form  [formGroup]="productForm">
+    <mat-form-field id="name">
+      <input matInput formControlName="name" type="text" placeholder="Nome comercial">
+    </mat-form-field>
 
+    <mat-form-field id="description">
+      <input matInput formControlName="description" type="text" placeholder="Descrição">
+    </mat-form-field>
+
+    <mat-form-field id="model">
+      <input matInput formControlName="model" type="text" placeholder="Modelo">
+    </mat-form-field>
+
+    <mat-form-field id="serial">
+      <input matInput formControlName="serial" type="text" placeholder="Nº de série">
+    </mat-form-field>
+
+    <mat-form-field id="barcode">
+      <input matInput formControlName="barcode" type="text" placeholder="Código de barra">
+    </mat-form-field>
+
+    <div class="clear-both"></div>
+
+    <mat-form-field id="makerPrice">
+      <input matInput formControlName="makerPrice" type="text" placeholder="Preço de fábrica">
+    </mat-form-field>
+
+    <div class="clear-both"></div>
     
     <mat-card-actions>
-      <button mat-raised-button type="submit" color="primary" [disabled]="!productForm.valid"></button>    
+      <button mat-raised-button type="submit" color="primary" [disabled]="!productForm.valid">{{submitButton}}</button>    
     </mat-card-actions>
   </form>
 </mat-card>

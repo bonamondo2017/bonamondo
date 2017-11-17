@@ -14,20 +14,17 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.paramsToMenuSidenav = {
       menuSettings: [{
-        description: "Teste 1",
-        route: ['/main/topic']
+        description: "Língua",
+        route: ['/main/language']
       }, {
-        description: "Teste 2",
-        route: ['/main/delegation']
+        description: "Tipo de Companhia",
+        route: ['/main/company-type']
       }, {
-        description: "Teste 3",
-        route: ['/main/occupation-group']
+        description: "Companhia",
+        route: ['/main/company']
       }, {
-        description: "Teste 4",
-        route: ['/main/institution']
-      }, {
-        description: "Teste 5",
-        route: ['/main/occupation']
+        description: "Produto",
+        route: ['/main/product']
       }], paramsToLogout: {
         routeAfterLogout: ['/login']
       }

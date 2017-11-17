@@ -9,22 +9,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from './../../../shared/services/firebase/crud.service';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-company',
+  templateUrl: './company.component.html',
+  styleUrls: ['./company.component.css']
 })
-export class ProductComponent implements OnInit {  
+export class CompanyComponent implements OnInit {
   public paramsToTableData: any;
-  public productForm: FormGroup;
+  public companyForm: FormGroup;
 
   public title: string;
+
   /*update properties on change start*/
   paramToSearch: any;
   submitToCreate: boolean;
   submitToUpdate: boolean;
   submitButton: string;
   /*update properties on change end*/
-
+  
   constructor(
     private crud: CrudService,
     public matsnackbar: MatSnackBar,
@@ -33,19 +34,16 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit() { 
-    this.productInit();
+    this.companyInit();
 
-    this.productForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
+    this.companyForm = new FormGroup({
+      'tradingName': new FormControl(null, Validators.required),
+      'businessName': new FormControl(null),
       'description': new FormControl(null, Validators.required),
-      'productTypes': new FormArray([]),
-      'model': new FormControl(null),
-      'serial': new FormControl(null),
-      'dimension': new FormArray([]),
-      'maker': new FormArray([]),
-      'barcode': new FormControl(null),
-      'composition': new FormArray([]), //{ product: string, quantity: number }
-      'makerPrice': new FormControl(null)
+      'companyTypes': new FormArray([]), //e.g.: Industry, Trading, Services
+      'companyAreas': new FormArray([]), //e.g.: Technology, Telecommunication, Food
+      'foundation': new FormArray([]), // {year: number, month: string, day: number}
+      'headquarters': new FormArray([]), //{country: string, state: string, city: sring}
     })
 
     this.makeList();
@@ -54,20 +52,20 @@ export class ProductComponent implements OnInit {
   makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de produtos",
+        title: "Lista de empresas",
         delete: [{
-          routeAfterDelete: '/main/product',
-          routeToApi: 'products',
+          routeAfterDelete: '/main/company',
+          routeToApi: 'companies',
           fieldToDelete: '__key'
         }],
         search: true
       },
       list: {
-        route: "products",
-        show: ['name', 'description', 'model'],
-        header: ['Nome', 'Descrição', 'Modelo'],
+        route: "companies",
+        show: ['name', 'description', 'foundation'],
+        header: ['Nome', 'Descrição', 'Fundação'],
         order: ['__key', 'desc'],
-        edit: {route: '/main/product/', param: '__key'},
+        edit: {route: '/main/company/', param: '__key'},
         page: 1
       },
       actionToolbar: {
@@ -76,27 +74,27 @@ export class ProductComponent implements OnInit {
     };
   }
 
-  productInit = () => {
+  companyInit = () => {
     this.route.params.subscribe(params => {
       if(params.id) {
         this.paramToSearch = params.id;
         this.submitToCreate = false;
         this.submitToUpdate = true;
-        this.title = "Atualizar produto";
+        this.title = "Atualizar companhia";
         this.submitButton = "Atualizar";
 
         let param = this.paramToSearch.replace(':', '');
 
         this.crud.read({
-          route: 'products/'+param,
+          route: 'companies/'+param,
           page: 1
         }).then(res => {
-          this.productForm.patchValue(res);
+          this.companyForm.patchValue(res);
         })
       } else {
         this.submitToCreate = true;
         this.submitToUpdate = false;
-        this.title = "Novo produto";
+        this.title = "Nova companhia";
         this.submitButton = "Salvar";
       }
     })

@@ -500,8 +500,10 @@ export class TableDataComponent implements OnInit, OnChanges {
       } else {
         this.arraySource = res;
       }
-      
-      this.filterArrayKey(this.arraySource);
+
+      if(this.arraySource.cod != "ra-03") {
+        this.filterArrayKey(this.arraySource);
+      }
 
       this.pageTotal = Math.ceil(this.arraySource.total/this.params.list.limit);
       

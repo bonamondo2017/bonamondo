@@ -4,16 +4,19 @@ import { CommonModule } from '@angular/common';
 /**
  * Components
  */
+import { CompanyComponent } from './components/company/company.component';
+import { CompanyTypeComponent } from './components/company-type/company-type.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LanguageComponent } from './components/language/language.component';
 import { MainComponent } from './main.component';
+import { ProductComponent } from './components/product/product.component';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
 
 /**
  * Modules
  */
 import { MainRoutingModule } from './main-routing.module';
 import { SharedModule } from './../shared/shared.module';
-import { UserRegisterComponent } from './components/user-register/user-register.component';
-import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   imports: [
@@ -22,8 +25,11 @@ import { ProductComponent } from './components/product/product.component';
     SharedModule
   ],
   declarations: [
+    CompanyComponent,
     DashboardComponent, 
-    MainComponent, UserRegisterComponent, ProductComponent
+    MainComponent, 
+    ProductComponent, 
+    UserRegisterComponent, CompanyTypeComponent, LanguageComponent
   ]
 })
 export class MainModule { }

@@ -102,9 +102,9 @@ export class DashboardComponent implements OnInit {
       },
       list: {
         route: "bonamondoTasks",
-        show: ['description', 'status','person'],
-        header: ['Descrição', 'Status','Pessoal Responsavel'],
-        order: ['description', 'desc'],
+        show: ['description', 'status', 'person'],
+        header: ['Descrição', 'Status', 'Pessoa Responsável'],
+        order: ['status', 'asc'],
         edit: {route: '/main/dashboard/', param: '__key'},
         page: 1
       },

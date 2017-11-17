@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+  </mat-card-header>
+  
+  <form (ngSubmit)="onCompanyTypeFormSubmit()" [formGroup]="companyTypeForm">
+    <mat-form-field id="name">
+      <input matInput formControlName="name" type="text" placeholder="Nome">
+    </mat-form-field>
+
+    <mat-form-field id="description">
+      <input matInput formControlName="description" type="text" placeholder="Descrição">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select formControlName="languageSetting" placeholder="Língua">
+        <mat-option *ngFor="let language of languages" [value]="language.initials">{{language.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <div class="clear-both"></div>
+    
+    <mat-card-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!companyTypeForm.valid">{{submitButton}}</button>    
+    </mat-card-actions>
+  </form>
+</mat-card>
+  
+<bonamondo-table-data [params]="paramsToTableData"></bonamondo-table-data>
