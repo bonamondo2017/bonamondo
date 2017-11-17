@@ -13,6 +13,7 @@ import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
 import { SharedModule } from './../shared/shared.module';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { UserRegisterComponent } from './components/user-register/user-register.
   ],
   declarations: [
     DashboardComponent, 
-    MainComponent, UserRegisterComponent
+    MainComponent, UserRegisterComponent, ProductComponent
   ]
 })
 export class MainModule { }

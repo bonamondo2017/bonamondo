@@ -14,8 +14,8 @@
     </mat-form-field>
 
     <mat-form-field id="status">
-      <mat-select formControlName="status" placeholder="Pessoa responsável">
-        <mat-option *ngFor="let person of perople" [value]="person.value">{{person.description}}</mat-option>
+      <mat-select formControlName="person" placeholder="Pessoa responsável">
+        <mat-option *ngFor="let person of people" [value]="person.value">{{person.description}}</mat-option>
       </mat-select>
     </mat-form-field>
     
