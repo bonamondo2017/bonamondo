@@ -18,6 +18,16 @@ export class DashboardComponent implements OnInit {
   paramsToTableData: any;
   statusSelect: any;
   title: string;
+  people: any = [{
+    description: "Ryzzan",
+    value: "Ryzzan"
+  }, {
+    description: "Danilo",
+    value: "Danilo"
+  }, {
+    description: "Victor",
+    value: "Victor"
+  }]
 
   /*update properties on change start*/
   paramToSearch: any;
@@ -44,7 +54,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardForm = new FormGroup({
       'description': new FormControl(null, Validators.required),
       'status': new FormControl(null, Validators.required),
-      'more': new FormControl(null)
+      'person': new FormControl(null)
     })
 
     this.makeList();
@@ -59,13 +69,13 @@ export class DashboardComponent implements OnInit {
         this.paramToSearch = params.id;
         this.submitToCreate = false;
         this.submitToUpdate = true;
-        this.title = "Update Task";
-        this.submitButton = "Update";
+        this.title = "Atualizar tarefa";
+        this.submitButton = "Atualizar";
 
         let param = this.paramToSearch.replace(':', '');
 
         this.crud.read({
-          route: 'blueprintTasks/'+param,
+          route: 'bonamondoTasks/'+param,
           page: 1
         }).then(res => {
           this.dashboardForm.patchValue(res);
@@ -73,8 +83,8 @@ export class DashboardComponent implements OnInit {
       } else {
         this.submitToCreate = true;
         this.submitToUpdate = false;
-        this.title = "New Task";
-        this.submitButton = "Save";
+        this.title = "Atualizar tarefa";
+        this.submitButton = "Salvar";
       }
     })
   }
@@ -82,30 +92,21 @@ export class DashboardComponent implements OnInit {
   makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Tasks list",
+        title: "Lista de tarefas",
         delete: [{
           routeAfterDelete: '/main/dashboard',
-          routeToApi: 'blueprintTasks',
+          routeToApi: 'bonamondoTasks',
           fieldToDelete: '__key'
         }],
         search: true
       },
       list: {
-        route: "blueprintTasks",
+        route: "bonamondoTasks",
         show: ['description', 'status'],
-        header: ['Description', 'Status'],
+        header: ['Descrição', 'Status'],
         order: ['description', 'desc'],
         edit: {route: '/main/dashboard/', param: '__key'},
-        page: 1,
-        changeValue: [{
-          field: 'status',
-          fieldValue: 'To-Do',
-          newValue: 'Por fazer, alterado em params'
-        }, {
-          field: 'status',
-          fieldValue: 'Problems',
-          newValue: 'Problemas, alterado em params'
-        }]
+        page: 1
       },
       actionToolbar: {
         language: 'pt-br'
@@ -116,7 +117,7 @@ export class DashboardComponent implements OnInit {
   onDashboardFormSubmit = () => {
     if(this.submitToUpdate) {
       let params = {
-        route: 'blueprintTasks',
+        route: 'bonamondoTasks',
         objectToUpdate: this.dashboardForm.value,
         paramToUpdate: this.paramToSearch.replace(':', '')
       };
@@ -137,7 +138,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/main/dashboard']);
     } else if(this.submitToCreate) {
       let params = {
-        route: 'blueprintTasks',
+        route: 'bonamondoTasks',
         objectToCreate: this.dashboardForm.value
       };
 
