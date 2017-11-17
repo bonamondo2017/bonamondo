@@ -10,7 +10,6 @@ export class CrudService {
   constructor() { }
 
   create = (params) => new Promise((resolve, reject) => {
-    console.log(params);
     if(!params.route) {
       return this.message = {
         code: "c-01",
@@ -24,9 +23,9 @@ export class CrudService {
         description: "Object to push required"
       }
     }
-
+    
     let ref = fbDatabase.ref(params.route).push(params.objectToCreate);
-    console.log(ref);
+
     ref
     .then((res) => {
       resolve({
@@ -188,45 +187,29 @@ export class CrudService {
       };
     }
 
-    let checkDelete = false;
-
     for(let lim = params.paramToDelete.length, i =0; i < lim; i++) {
-      let ref = fbDatabase.ref(params.route+"/"+params.paramToDelete[i]);
-      ref.remove()
+      fbDatabase.ref(params.route).child(params.paramToDelete[i]).remove()
       .catch(rej => {
-        console.log(197)
-        checkDelete = false;
-
         reject({
           cod: "error-d-01",
           message: rej
         })
       })
       .then(res => {
-        console.log(205)
-        checkDelete = true;
-        console.log(checkDelete)
+        let number = params.paramToDelete.length;
+        
+        if(number > 1) {
+          resolve({
+            cod: "d-03",
+            message: number+" ítens removidos com sucesso"
+          })
+        } else {
+          resolve({
+            cod: "d-03",
+            message: number+" item removido com sucesso"
+          })
+        }
       });
-    }
-
-    console.log(checkDelete)
-
-    if(checkDelete) {
-      let number = params.paramToDelete.length;
-
-      if(number > 1) {
-        resolve({
-          cod: "d-03",
-          message: number+" ítens removidos com sucesso"
-        })
-      } else {
-        resolve({
-          cod: "d-03",
-          message: number+" item removido com sucesso"
-        })
-      }
-    } else {
-
     }
   })
 }

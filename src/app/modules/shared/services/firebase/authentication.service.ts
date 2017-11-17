@@ -64,24 +64,20 @@ export class AuthenticationService {
     }
   })
 
-  logout = () => new Promise((resolve, reject) => {
-    if(sessionStorage.getItem('access_token')) {
-      sessionStorage.clear();
-    } else {
-      fbAuth.signOut()
-      .then(res => {
-        resolve({
-          cod: "lo-01",
-          message: res
-        })
+  logout = () => new Promise((resolve, reject) => {  
+    fbAuth.signOut()
+    .then(res => {
+      resolve({
+        cod: "lo-01",
+        message: res
       })
-      .catch(rej => {
-        reject({
-          cod: "lo-02",
-          message: rej
-        })
+    })
+    .catch(rej => {
+      reject({
+        cod: "lo-02",
+        message: rej
       })
-    }
+    })
   })
   
   recoverPasswordEmail = (email) => new Promise((resolve, reject) => {
@@ -155,7 +151,6 @@ export class AuthenticationService {
     let res;
     
     if(params.email === params.repeatEmail) {
-      console.log(158)
       //Checking if signing up email is already registered
       fbDatabase.ref('/users')
       .orderByChild('email')

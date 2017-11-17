@@ -70,7 +70,11 @@ export class LoginComponent implements OnInit {
     
     this.authentication.login(this.params)
     .catch(error => {
-      console.log(error)
+      this.matsnackbar.open(error.message, '', {
+        duration: 2000
+      });
+
+      return error;
     })
     .then(res => {
       let string = JSON.stringify(res);
@@ -82,12 +86,6 @@ export class LoginComponent implements OnInit {
         });
         
         this.router.navigate(this.params.routeAfterLoggedIn);
-      }
-
-      if(json.cod == "le-01") {
-        this.matsnackbar.open(json.message, '', {
-          duration: 12000
-        });
       }
     });
   }

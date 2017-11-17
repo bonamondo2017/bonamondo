@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
         title: "Tasks list",
         delete: [{
           routeAfterDelete: '/main/dashboard',
-          routeToApi: 'blueprintTask',
+          routeToApi: 'blueprintTasks',
           fieldToDelete: '__key'
         }],
         search: true
