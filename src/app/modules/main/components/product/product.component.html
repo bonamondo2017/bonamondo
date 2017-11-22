@@ -20,7 +20,7 @@
     </mat-form-field>
 
     <mat-form-field id="barcode">
-      <input matInput formControlName="barcode" type="text" placeholder="Código de barra">
+      <input matInput formControlName="barcode" type="text" placeholder="Código de barra" (keyup)="productInfoFromGoogle(productForm.get('barcode').value)">
     </mat-form-field>
 
     <div class="clear-both"></div>

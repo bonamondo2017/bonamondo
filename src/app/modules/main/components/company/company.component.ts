@@ -25,6 +25,10 @@ export class CompanyComponent implements OnInit {
   submitToUpdate: boolean;
   submitButton: string;
   /*update properties on change end*/
+
+  /*selects to form start*/
+  selectCompanyTypes: any;
+  /*selects to form end*/
   
   constructor(
     private crud: CrudService,
@@ -35,12 +39,19 @@ export class CompanyComponent implements OnInit {
 
   ngOnInit() { 
     this.companyInit();
+    
+    this.crud.read({
+      route: 'companyTypes',
+      page: 1
+    }).then(res => {
+      this.selectCompanyTypes = res;
+    })
 
     this.companyForm = new FormGroup({
       'tradingName': new FormControl(null, Validators.required),
       'businessName': new FormControl(null),
       'description': new FormControl(null, Validators.required),
-      'companyTypes': new FormArray([]), //e.g.: Industry, Trading, Services
+      'companyTypes': new FormControl(null), //e.g.: Industry, Trading, Services
       'companyAreas': new FormArray([]), //e.g.: Technology, Telecommunication, Food
       'foundation': new FormArray([]), // {year: number, month: string, day: number}
       'headquarters': new FormArray([]), //{country: string, state: string, city: sring}
@@ -62,8 +73,8 @@ export class CompanyComponent implements OnInit {
       },
       list: {
         route: "companies",
-        show: ['name', 'description', 'foundation'],
-        header: ['Nome', 'Descrição', 'Fundação'],
+        show: ['tradingName', 'description'],
+        header: ['Nome', 'Descrição'],
         order: ['__key', 'desc'],
         edit: {route: '/main/company/', param: '__key'},
         page: 1
@@ -98,5 +109,52 @@ export class CompanyComponent implements OnInit {
         this.submitButton = "Salvar";
       }
     })
+  }
+
+  onCompanyFormSubmit = () => {
+    if(this.submitToUpdate) {
+      let params = {
+        route: 'companies',
+        objectToUpdate: this.companyForm.value,
+        paramToUpdate: this.paramToSearch.replace(':', '')
+      };
+  
+      this.crud.update(params)
+      .then(res => {
+        this.matsnackbar.open(res['message'], '', {
+          duration: 2000
+        })
+      }, rej => {
+        this.matsnackbar.open(rej['message'], '', {
+          duration: 3000
+        })
+      })
+  
+      this.makeList();
+      
+      this.router.navigate(['/main/company']);
+    } else if(this.submitToCreate) {
+      let params = {
+        route: 'companies',
+        objectToCreate: this.companyForm.value
+      };
+
+      this.crud.create(params)
+      .then(res => {
+        this.matsnackbar.open(res['message'], '', {
+          duration: 2000
+        })
+      }, rej => {
+        this.matsnackbar.open(rej['message'], '', {
+          duration: 3000
+        })
+      })
+
+      this.companyForm.patchValue(this.companyForm.value);
+
+      this.makeList();
+    } else {
+      console.log("No action defined on submit");
+    }
   }
 }

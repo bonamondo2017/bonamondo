@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Http } from '@angular/http';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,8 +15,10 @@ import { CrudService } from './../../../shared/services/firebase/crud.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {  
+  public fetchedHtml: any;
   public paramsToTableData: any;
   public productForm: FormGroup;
+  private searchString: any;
 
   public title: string;
   /*update properties on change start*/
@@ -27,6 +30,7 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private crud: CrudService,
+    private http: Http,
     public matsnackbar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router
@@ -100,5 +104,25 @@ export class ProductComponent implements OnInit {
         this.submitButton = "Salvar";
       }
     })
+  } 
+
+  productInfoFromGoogle = (ean13Barcode) => {
+    this.clearSearch();
+
+    this.searchString = setTimeout(() => {
+      let headers = new Headers();
+      headers.append('x-forwarded-host', 'foo');
+      
+      this.http.get('https://www.googleapis.com/customsearch/v1?key=AIzaSyCuwyQgY7sANvgTErApvDGw-KHryJvXXXc&cx=017576662512468239146:omuauf_lfve&q='+ean13Barcode)
+      .subscribe(response => {
+        this.fetchedHtml = response;
+
+        console.log(this.fetchedHtml);
+      })
+    }, 500)
+  }
+
+  clearSearch = () => {
+    clearTimeout(this.searchString);
   }
 }
